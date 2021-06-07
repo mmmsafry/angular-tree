@@ -1,0 +1,8 @@
+
+<div class="container">
+  Facet
+</div>
+<app-checkbox-tree-facet *ngIf="treeData.length>0" [treeData]="treeData"></app-checkbox-tree-facet>
+<div *ngIf="error" class="error">
+  Something went wrong
+</div>
