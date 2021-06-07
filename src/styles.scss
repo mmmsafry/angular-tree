@@ -1,1 +1,59 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+h1 {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .left-panel {
+    flex-basis: 30%
+  }
+}
+
+.selected-list {
+  display: flex;
+  align-content: center;
+  width: 600px;
+  flex-wrap: wrap;
+
+  span {
+    display: inline-block;
+    padding: 0.4em;
+    background-color: #ececec;
+    margin: 0.2em;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+}
+
+
+.btn {
+  border-radius: 3px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 10px;
+  margin-left: 1.5em;
+}
+
+.btn:hover {
+  background-color: #d2d6d6;
+}
+
+.btn:active {
+  position: relative;
+  top: 1px;
+}
+
+.error{
+  color: darkred;
+  padding: 10px;
+  margin-top: 20px;
+  font-family: arial, sans-serif;
+}
+

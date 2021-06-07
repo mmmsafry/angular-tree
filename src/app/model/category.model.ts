@@ -8,6 +8,6 @@ export interface ICategory {
   parent: string;
   name: string;
   selected: boolean;
-  child?: ICategory[];
+  children?: ICategory[];
 }
 

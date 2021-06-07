@@ -1,1 +1,34 @@
-<p>checkbox-tree-facet works!</p>
+<div class="cat-list" *ngFor="let cateogry of categories">
+  <div class="cat">
+    <label class="container" [for]="cateogry.id">
+
+      <input type="checkbox"
+             [(ngModel)]="cateogry.isSelected"
+             [id]="cateogry.id"
+             (ngModelChange)="onToggleSelect()"
+             name="checkbox{{cateogry.id}}">
+      <span class="checkmark"></span>
+      {{cateogry.name}}
+    </label>
+
+    <span
+      [ngClass]="{
+      'expanded' : !cateogry.collapsed && cateogry.children && cateogry.children.length > 0 ,
+      'has-children' :cateogry.children && cateogry.children.length > 0
+      } "
+      (click)="toggleCollapsed(cateogry)">
+            <small> Toggle ({{cateogry.count}})</small>
+    </span>
+  </div>
+  <div *ngIf="!cateogry.collapsed && cateogry.children && cateogry.children.length > 0" class="cat select-all">
+    <input type="checkbox" (change)="selectAll($event,cateogry); onToggleSelect();" [(ngModel)]="cateogry.selectAll"
+           name="checkboxSelectAll{{cateogry.id}}">
+    <span class="select-all">select all</span>
+  </div>
+  <div class="children" [hidden]="cateogry.collapsed">
+    <app-checkbox-tree-facet *ngIf="cateogry.children && cateogry.children.length > 0" (toggleSelect)="onToggleSelect()"
+                             [categories]="cateogry.children"></app-checkbox-tree-facet>
+  </div>
+</div>
+
+

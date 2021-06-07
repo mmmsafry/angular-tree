@@ -14,15 +14,22 @@ export class CategoryTreeComponent implements OnInit {
   loading = false;
   error = false;
   sub: Subscription;
-  treeData: ICategory[] = [];
+  categories: ICategory[] = [];
+  selectedCategories: any[];
 
   constructor(private categoryApiService: CategoryApiService, private categoryTree: CategoryTreeService) {
   }
 
   ngOnInit(): void {
     this.getCategory();
+    /** Setting up selectedValue  */
     this.sub = this.categoryTree.treeData$.subscribe(res => {
-      this.treeData = res;
+      const apiResponse = res.map(obj => {
+        /** Default all categories are hidden */
+        obj.selected = false;
+        return obj;
+      });
+      this.categories = this.generateTree(apiResponse);
     });
   }
 
@@ -38,4 +45,48 @@ export class CategoryTreeComponent implements OnInit {
   }
 
 
+  generateTree(inputTreeRawData) {
+    const indexed = inputTreeRawData.reduce((res, item) => {
+      res[item.id] = item;
+      return res;
+    }, {});
+
+    const result = inputTreeRawData.filter((item) => {
+      const parent = indexed[item.parent];
+      if (parent) {
+        parent.collapsed = true;
+        parent.children = (parent.children || []).concat(item);
+      }
+      return !parent;
+    });
+    return (result);
+  }
+
+  toggleSelect() {
+    this.selectedCategories = [];
+    this.updateSelectedCategories(this.categories);
+  }
+
+  updateSelectedCategories(categories) {
+    categories.forEach(obj => {
+      if (obj.isSelected) {
+        this.selectedCategories.push({id: obj.id, name: obj.name});
+      }
+
+      if (obj.children && obj.children.length > 0) {
+        this.updateSelectedCategories(obj.children);
+      }
+    });
+  }
+
+  removeAllSelected(categories) {
+    categories.forEach(obj => {
+      obj.isSelected = false;
+      obj.selectAll = false;
+      if (obj.children && obj.children.length > 0) {
+        this.removeAllSelected(obj.children);
+      }
+    });
+    this.selectedCategories = [];
+  }
 }
