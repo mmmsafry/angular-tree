@@ -5,9 +5,9 @@ export type ICategoryAPI = ApiResponse<ICategory[]>;
 export interface ICategory {
   id: number;
   count: number;
-  parent: string;
+  parent: number;
   name: string;
-  selected: boolean;
+  selected?: boolean;
   children?: ICategory[];
 }
 

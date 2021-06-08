@@ -16,3 +16,5 @@ Go to  `cd angular-tree` folder and `npm install`
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
  
 
+### Flow of the current work
+Initially data sets are requested from server, if server request fails I have attached a data set in `data/response.ts`, data set will be loaded from response.ts.

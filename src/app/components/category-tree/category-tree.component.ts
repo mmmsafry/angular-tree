@@ -3,6 +3,7 @@ import {CategoryApiService} from '../../service/category-api.service';
 import {CategoryTreeService} from './category-tree.service';
 import {Subscription} from 'rxjs';
 import {ICategory} from '../../model/category.model';
+import {CATEGORY_DATA_FROM_FILE} from '../../data/response';
 
 @Component({
   selector: 'app-category-tree',
@@ -39,9 +40,17 @@ export class CategoryTreeComponent implements OnInit {
       console.log('r', resp);
       this.loading = false;
     }, error => {
-      this.error = false;
+      this.error = true;
+      this.loading = false;
       console.log(error);
+      this.loadFromLocal();
     });
+  }
+
+  loadFromLocal() {
+    this.error = false;
+    const localData = CATEGORY_DATA_FROM_FILE;
+    this.categoryTree.setCategoryTree(localData.data);
   }
 
 
