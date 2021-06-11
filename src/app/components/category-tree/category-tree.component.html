@@ -1,5 +1,6 @@
-<div class="container" [ng2-loading]="loading">
-  <div>
+<div class="container-flex">
+  <div [ng2-loading]="loading" class="mh-50 custom-container">
+    <h4> Data Loaded From API </h4>
     <button *ngIf="selectedCategories && selectedCategories.length > 0"
             (click)="removeAllSelected(categories)"
             class="btn">Remove all selected
@@ -8,9 +9,18 @@
     <app-checkbox-tree-facet
       (toggleSelect)="toggleSelect()" *ngIf="categories && categories.length > 0"
       [categories]="categories"></app-checkbox-tree-facet>
+
+    <div *ngIf="error" class="error">{{errorMessage}}</div>
   </div>
 
-  <div *ngIf="error" class="error">
-    Something went wrong
+  <div class="custom-container">
+    <h4> Data Loaded From Local - (Reused Component) </h4>
+
+    <!--Sample component reused -->
+    <app-checkbox-tree-facet
+      (toggleSelect)="toggleSelect()" *ngIf="categoriesLocal && categoriesLocal.length > 0"
+      [categories]="categoriesLocal"></app-checkbox-tree-facet>
   </div>
+
+
 </div>

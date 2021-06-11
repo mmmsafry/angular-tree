@@ -15,7 +15,7 @@ import {Ng2LoadingSpinnerModule} from 'ng2-loading-spinner';
     AppComponent,
     CategoryTreeComponent,
     LayoutComponent,
-    CheckboxTreeFacetComponent
+    CheckboxTreeFacetComponent,
   ],
   imports: [
     BrowserModule,

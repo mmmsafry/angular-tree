@@ -16,9 +16,12 @@ export class CategoryTreeComponent implements OnInit {
   error = false;
   sub: Subscription;
   categories: ICategory[] = [];
+  categoriesLocal: ICategory[] = [];
   selectedCategories: any[];
+  errorMessage: string;
 
-  constructor(private categoryApiService: CategoryApiService, private categoryTree: CategoryTreeService) {
+  constructor(private categoryApiService: CategoryApiService,
+              private categoryTree: CategoryTreeService) {
   }
 
   ngOnInit(): void {
@@ -32,6 +35,7 @@ export class CategoryTreeComponent implements OnInit {
       });
       this.categories = this.generateTree(apiResponse);
     });
+    this.loadFromLocal();
   }
 
   getCategory() {
@@ -40,17 +44,15 @@ export class CategoryTreeComponent implements OnInit {
       console.log('r', resp);
       this.loading = false;
     }, error => {
+      this.errorMessage = error.message;
       this.error = true;
       this.loading = false;
       console.log(error);
-      this.loadFromLocal();
     });
   }
 
   loadFromLocal() {
-    this.error = false;
-    const localData = CATEGORY_DATA_FROM_FILE;
-    this.categoryTree.setCategoryTree(localData.data);
+    this.categoriesLocal = this.generateTree(CATEGORY_DATA_FROM_FILE.data);
   }
 
 
